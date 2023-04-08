@@ -6,7 +6,7 @@ template<typename T, int size>
 class TPQueue {
  private:
     int count, last, first;
-    T arr[size];
+    T arr[100];
 
  public:
     TPQueue(): count(0), first(0), last(0) {}
@@ -17,28 +17,26 @@ class TPQueue {
         return count == size;
     }
     void push(const T& value) {
-        if (Full())
-            throw std::string("FULL!");
-        else {
+        if (!Full()) {
             count++;
             int c = first, i = last;
             while (c != last && arr[c].prior >= value.prior)
                 c = (c+1) % size;
-                while (i != c) {
+            while (i != c) {
                 arr[i] = arr[(i-1) % size];
                 i = (size + i-1) % size;
-                }
-                last = (last + 1) % size;
-                arr[c] = value;
-        }
+            }
+            last = (last + 1) % size;
+            arr[c] = value;
+        } else
+              throw std::string("FULL!");
     }
     const T & pop() {
-        if (Empty())
-            throw std::string("Empty!");
-        else {
+        if (!Empty()) {
             count--;
             return arr[first++ % size];
-        }
+        } else
+            throw std::string("Empty!");        
     }
 };
 
