@@ -28,15 +28,13 @@ class TPQueue {
             }
             last = (last + 1) % size;
             arr[c] = value;
-        } else
-              throw std::string("FULL!");
+        }
     }
     const T & pop() {
         if (!Empty()) {
             count--;
             return arr[first++ % size];
-        } else
-            throw std::string("Empty!");        
+            }
     }
 };
 
