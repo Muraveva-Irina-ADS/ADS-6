@@ -4,7 +4,42 @@
 
 template<typename T, int size>
 class TPQueue {
-  // реализация шаблона очереди с приоритетом на кольцевом буфере
+ private:
+    int count, last, first;
+    T arr[size];
+
+ public:
+    TPQueue(): count(0), first(0), last(0) {}
+    bool Empty() const{
+	      return count == 0;
+    }
+    bool Full() const {
+        return count == size;
+    }
+    void push(const T& value) {
+        if (Full())
+            throw std::string("FULL!");
+        else {
+            count++;
+            int c = first, i = last;
+            while (c != last && arr[c].prior > value.prior)
+                c = (c+1) % size;
+                while (i != c) {
+                arr[i] = arr[(i-1) % size];
+                i = (size + i-1) % size;
+                }
+                last = (last + 1) % size;
+                arr[c] = value;
+                }
+    }
+    const T & pop() {
+        if (Empty())
+            throw std::string("Empty!");
+        else {
+            count--;
+            return arr[first++ % size];
+            }
+    }
 };
 
 struct SYM {
