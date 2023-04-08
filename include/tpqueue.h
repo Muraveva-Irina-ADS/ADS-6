@@ -10,8 +10,8 @@ class TPQueue {
 
  public:
     TPQueue(): count(0), first(0), last(0) {}
-    bool Empty() const{
-	      return count == 0;
+    bool Empty() const {
+        return count == 0;
     }
     bool Full() const {
         return count == size;
@@ -22,7 +22,7 @@ class TPQueue {
         else {
             count++;
             int c = first, i = last;
-            while (c != last && arr[c].prior > value.prior)
+            while (c != last && arr[c].prior >= value.prior)
                 c = (c+1) % size;
                 while (i != c) {
                 arr[i] = arr[(i-1) % size];
@@ -30,7 +30,7 @@ class TPQueue {
                 }
                 last = (last + 1) % size;
                 arr[c] = value;
-                }
+        }
     }
     const T & pop() {
         if (Empty())
@@ -38,7 +38,7 @@ class TPQueue {
         else {
             count--;
             return arr[first++ % size];
-            }
+        }
     }
 };
 
